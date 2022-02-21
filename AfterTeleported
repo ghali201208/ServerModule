@@ -1,0 +1,93 @@
+local uicache = {}
+
+game.Loaded:Wait()
+wait(0.5)
+game.Players.LocalPlayer:Wait()
+wait(3)
+
+for _, ui in ipairs(game.Players.LocalPlayer.PlayerGui:GetChildren()) do
+	if ui.ClassName == "ScreenGui" and ui.Enabled == true then
+		ui.Enabled = false
+		table.insert(uicache,ui.Name)
+	end
+end
+local Sounds = Instance.new("Folder",game.Players.LocalPlayer.PlayerGui)
+Sounds.Name = "Serverhop"
+local Whoosh2 = Instance.new("Sound")
+Whoosh2.Parent = Sounds
+Whoosh2.Volume = 0.3
+Whoosh2.SoundId = "rbxassetid://8893376599"
+Whoosh2.PlayOnRemove = true
+Whoosh2:Destroy()
+local Hit = Instance.new("Sound")
+Hit.Parent = Sounds
+Hit.Volume = 1
+Hit.SoundId = "rbxassetid://8893376314"
+Hit.PlayOnRemove = true
+
+local MainCloudSFX = Instance.new("Sound")
+MainCloudSFX.Parent = Sounds
+MainCloudSFX.Volume = 2
+MainCloudSFX.SoundId = "rbxassetid://8893979824"
+MainCloudSFX.PlayOnRemove = true
+MainCloudSFX.TimePosition = 13
+
+
+local CAMERA_OFFSET = Vector3.new(0,90,0)
+local RunService = game:GetService("RunService")	
+local TweenService = game:GetService("TweenService")
+local camera = workspace.CurrentCamera
+local player = game.Players.LocalPlayer
+camera.CameraType = Enum.CameraType.Scriptable
+local function onRenderStep()
+	if player.Character then
+		local playerPosition = player.Character.HumanoidRootPart.Position
+		local cameraPosition = playerPosition + CAMERA_OFFSET
+		camera.CoordinateFrame = CFrame.new(cameraPosition, playerPosition)
+	end
+end
+
+RunService:BindToRenderStep("Camera", Enum.RenderPriority.Camera.Value, onRenderStep)
+
+local BlurNew = Instance.new("BlurEffect",game.Lighting)
+BlurNew.Size = 10
+local ColorCorrectionNew = Instance.new("ColorCorrectionEffect",game.Lighting)
+ColorCorrectionNew.Brightness = 0.1
+ColorCorrectionNew.Saturation = 0.5
+ColorCorrectionNew.Contrast = 0.1
+MainCloudSFX:Destroy()
+wait(0.3)
+TweenService:Create(ColorCorrectionNew, TweenInfo.new(0.1, Enum.EasingStyle.Back), {Brightness = 0.8}):Play()
+CAMERA_OFFSET = Vector3.new(0,60,0)
+wait(0.2)
+TweenService:Create(ColorCorrectionNew, TweenInfo.new(0.2, Enum.EasingStyle.Back), {Brightness = 0.1}):Play()
+wait(0.3)
+TweenService:Create(ColorCorrectionNew, TweenInfo.new(0.1, Enum.EasingStyle.Back), {Brightness = 0.8}):Play()
+CAMERA_OFFSET = Vector3.new(0,30,0)
+wait(0.2)
+TweenService:Create(ColorCorrectionNew, TweenInfo.new(0.2, Enum.EasingStyle.Back), {Brightness = 0.1}):Play()
+wait(0.3)
+TweenService:Create(ColorCorrectionNew, TweenInfo.new(0.1, Enum.EasingStyle.Back), {Brightness = 0.8}):Play()
+CAMERA_OFFSET = Vector3.new(0,15,0)
+wait(0.2)
+TweenService:Create(ColorCorrectionNew, TweenInfo.new(0.3, Enum.EasingStyle.Back), {Brightness = 0.1}):Play()
+wait(0.3)
+
+TweenService:Create(BlurNew, TweenInfo.new(3.661, Enum.EasingStyle.Back), {Size = 0}):Play()
+TweenService:Create(ColorCorrectionNew, TweenInfo.new(3.661, Enum.EasingStyle.Back), {Saturation = 0}):Play()
+TweenService:Create(ColorCorrectionNew, TweenInfo.new(3.661, Enum.EasingStyle.Back), {Brightness = 0}):Play()
+TweenService:Create(ColorCorrectionNew, TweenInfo.new(3.661, Enum.EasingStyle.Back), {Contrast = 0}):Play()
+wait(0.5)
+Hit:Destroy()
+TweenService:Create(ColorCorrectionNew, TweenInfo.new(0.1, Enum.EasingStyle.Back), {Brightness = 1}):Play()
+CAMERA_OFFSET = Vector3.new(0,0,0)
+camera.CameraType = Enum.CameraType.Custom
+for _, ui in pairs(uicache) do
+	for _, uiingame in ipairs(game.Players.LocalPlayer.PlayerGui:GetChildren()) do
+		if ui == uiingame then
+			uiingame.Enabled = true
+		end
+	end
+end
+wait(0.3)
+TweenService:Create(ColorCorrectionNew, TweenInfo.new(0.2, Enum.EasingStyle.Back), {Brightness = 0}):Play()
