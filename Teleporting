@@ -76,7 +76,7 @@ CAMERA_OFFSET = Vector3.new(0,90,0)
 wait(0.2)
 TweenService:Create(ColorCorrection, TweenInfo.new(0.2, Enum.EasingStyle.Back), {Brightness = 0.1}):Play()
 wait(0.2)
-syn.queue_on_teleport(game:HttpGet("https://pastebin.com/raw/KqraB9J0"))
+syn.queue_on_teleport(game:HttpGet("https://raw.githubusercontent.com/shlexware/ServerModule/main/AfterTeleported"))
 -- Try to serverhop
 Serverhop()
 wait(10.9)
