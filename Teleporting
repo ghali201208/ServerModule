@@ -1,0 +1,89 @@
+local TweenService = game:GetService("TweenService")
+local CAMERA_OFFSET = Vector3.new(0,0,0)
+local RunService = game:GetService("RunService")	
+local camera = workspace.CurrentCamera
+
+local player = game.Players.LocalPlayer
+camera.CameraType = Enum.CameraType.Scriptable
+player.Character.Humanoid.WalkSpeed = 0
+player.Character.Humanoid.JumpPower = 0
+local function onRenderStep()
+	if player.Character then
+		local playerPosition = player.Character.HumanoidRootPart.Position
+		local cameraPosition = playerPosition + CAMERA_OFFSET
+		camera.CoordinateFrame = CFrame.new(cameraPosition, playerPosition)
+	end
+end
+
+RunService:BindToRenderStep("Camera", Enum.RenderPriority.Camera.Value, onRenderStep)
+local Blur = Instance.new("BlurEffect",game.Lighting)
+Blur.Size = 0
+local ColorCorrection = Instance.new("ColorCorrectionEffect",game.Lighting)
+
+wait(2)
+local Sounds = Instance.new("Folder",game.Players.LocalPlayer.PlayerGui)
+Sounds.Name = "Serverhop"
+
+local MainCloudSFX = Instance.new("Sound")
+MainCloudSFX.Parent = Sounds
+MainCloudSFX.Volume = 2
+MainCloudSFX.SoundId = "rbxassetid://8893979824"
+MainCloudSFX.PlayOnRemove = true
+
+local Whoosh1 = Instance.new("Sound")
+Whoosh1.Parent = Sounds
+Whoosh1.Volume = 2
+Whoosh1.SoundId = "rbxassetid://8893801865"
+Whoosh1.PlayOnRemove = true
+
+
+local Hit = Instance.new("Sound")
+Hit.Parent = Sounds
+Hit.Volume = 1
+Hit.SoundId = "rbxassetid://8893376314"
+Hit.PlayOnRemove = true
+
+function Serverhop()
+	local x = {}
+	for _, Server in ipairs(game:GetService("HttpService"):JSONDecode(game:HttpGetAsync("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100")).data) do
+		if type(Server) == "table" and Server.maxPlayers > Server.playing and Server.id ~= game.JobId then
+			x[#x + 1] = Server.id
+		end
+	end
+	if #x > 0 then
+		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, x[math.random(1, #x)])
+	else
+		return print("couldnt find server")
+	end
+end
+
+Whoosh1:Destroy()
+wait(0.8)
+TweenService:Create(Blur, TweenInfo.new(3.661, Enum.EasingStyle.Back), {Size = 10}):Play()
+TweenService:Create(ColorCorrection, TweenInfo.new(3.661, Enum.EasingStyle.Back), {Saturation = 0.5}):Play()
+TweenService:Create(ColorCorrection, TweenInfo.new(3.661, Enum.EasingStyle.Back), {Brightness = 0.1}):Play()
+TweenService:Create(ColorCorrection, TweenInfo.new(3.661, Enum.EasingStyle.Back), {Contrast = 0.1}):Play()
+wait(1.7)
+MainCloudSFX:Destroy()
+wait(1.2)
+TweenService:Create(ColorCorrection, TweenInfo.new(0.1, Enum.EasingStyle.Back), {Brightness = 0.8}):Play()
+CAMERA_OFFSET = Vector3.new(0,45,0)
+wait(0.2)
+TweenService:Create(ColorCorrection, TweenInfo.new(0.2, Enum.EasingStyle.Back), {Brightness = 0.1}):Play()
+wait(0.3)
+TweenService:Create(ColorCorrection, TweenInfo.new(0.1, Enum.EasingStyle.Back), {Brightness = 0.8}):Play()
+CAMERA_OFFSET = Vector3.new(0,90,0)
+wait(0.2)
+TweenService:Create(ColorCorrection, TweenInfo.new(0.2, Enum.EasingStyle.Back), {Brightness = 0.1}):Play()
+wait(0.2)
+syn.queue_on_teleport(game:HttpGet("https://pastebin.com/raw/KqraB9J0"))
+-- Try to serverhop
+Serverhop()
+wait(10.9)
+
+
+
+
+-- Back from serverhop
+
+
