@@ -1,8 +1,6 @@
 local uicache = {}
 
 game.Loaded:Wait()
-wait(0.5)
-game.Players.LocalPlayer:Wait()
 wait(3)
 
 for _, ui in ipairs(game.Players.LocalPlayer.PlayerGui:GetChildren()) do
