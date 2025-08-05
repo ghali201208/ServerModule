@@ -10,41 +10,56 @@ local PlayerMouse = Player:GetMouse()
 
 local redzlib = {
 	Themes = {
-		ActiveTheme = "Darker", -- يمكنك تغييره إلى "Dark" أو "Purple"
-		Darker = {},
-		Dark = {},
-		Purple = {}
+		Darker = {
+			["Color Hub 1"] = ColorSequence.new({
+				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)),    -- أحمر
+				ColorSequenceKeypoint.new(0.17, Color3.fromRGB(255, 165, 0)),  -- برتقالي
+				ColorSequenceKeypoint.new(0.33, Color3.fromRGB(255, 255, 0)),  -- أصفر
+				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 255, 0)),    -- أخضر
+				ColorSequenceKeypoint.new(0.67, Color3.fromRGB(0, 127, 255)),  -- أزرق سماوي
+				ColorSequenceKeypoint.new(0.83, Color3.fromRGB(75, 0, 130)),   -- بنفسجي داكن
+				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(148, 0, 211))   -- بنفسجي
+			}),
+			["Color Hub 2"] = Color3.fromRGB(30, 30, 30),
+			["Color Stroke"] = Color3.fromRGB(40, 40, 40),
+			["Color Theme"] = Color3.fromRGB(88, 101, 242),
+			["Color Text"] = Color3.fromRGB(243, 243, 243),
+			["Color Dark Text"] = Color3.fromRGB(180, 180, 180)
+		},
+		Dark = {
+			["Color Hub 1"] = ColorSequence.new({
+				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)),
+				ColorSequenceKeypoint.new(0.17, Color3.fromRGB(255, 165, 0)),
+				ColorSequenceKeypoint.new(0.33, Color3.fromRGB(255, 255, 0)),
+				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 255, 0)),
+				ColorSequenceKeypoint.new(0.67, Color3.fromRGB(0, 127, 255)),
+				ColorSequenceKeypoint.new(0.83, Color3.fromRGB(75, 0, 130)),
+				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(148, 0, 211))
+			}),
+			["Color Hub 2"] = Color3.fromRGB(45, 45, 45),
+			["Color Stroke"] = Color3.fromRGB(65, 65, 65),
+			["Color Theme"] = Color3.fromRGB(65, 150, 255),
+			["Color Text"] = Color3.fromRGB(245, 245, 245),
+			["Color Dark Text"] = Color3.fromRGB(190, 190, 190)
+		},
+		Purple = {
+			["Color Hub 1"] = ColorSequence.new({
+				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)),
+				ColorSequenceKeypoint.new(0.17, Color3.fromRGB(255, 165, 0)),
+				ColorSequenceKeypoint.new(0.33, Color3.fromRGB(255, 255, 0)),
+				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 255, 0)),
+				ColorSequenceKeypoint.new(0.67, Color3.fromRGB(0, 127, 255)),
+				ColorSequenceKeypoint.new(0.83, Color3.fromRGB(75, 0, 130)),
+				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(148, 0, 211))
+			}),
+			["Color Hub 2"] = Color3.fromRGB(30, 30, 30),
+			["Color Stroke"] = Color3.fromRGB(40, 40, 40),
+			["Color Theme"] = Color3.fromRGB(150, 0, 255),
+			["Color Text"] = Color3.fromRGB(240, 240, 240),
+			["Color Dark Text"] = Color3.fromRGB(180, 180, 180)
+		}
 	}
 }
-
--- تابع إنشاء رينبو متحرك
-local RunService = game:GetService("RunService")
-
--- إعداد البيانات
-local function getRainbowColor(offset)
-	local hue = (tick() * 0.1 + offset) % 1
-	return Color3.fromHSV(hue, 1, 1)
-end
-
--- تحديث تدريجي للألوان
-RunService.RenderStepped:Connect(function()
-	local c1 = getRainbowColor(0)
-	local c2 = getRainbowColor(0.5)
-	local c3 = getRainbowColor(1)
-
-	local sequence = ColorSequence.new({
-		ColorSequenceKeypoint.new(0.00, c1),
-		ColorSequenceKeypoint.new(0.50, c2),
-		ColorSequenceKeypoint.new(1.00, c3)
-	})
-
-	-- تحديث الثيمات الثلاثة بنفس التسلسل
-	for _, theme in pairs(redzlib.Themes) do
-		if typeof(theme) == "table" then
-			theme["Color Hub 1"] = sequence
-		end
-	end
-end)
 	Info = {
 		Version = "1.1.0"
 	},
