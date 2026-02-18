@@ -818,6 +818,4 @@
 			["xsquare"] = "rbxassetid://10747384217",
 			["zoomin"] = "rbxassetid://10747384552",
 			["zoomout"] = "rbxassetid://10747384679"
-		}
-	end)()
 }
