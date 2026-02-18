@@ -1,4 +1,4 @@
-Icons = (function()
+
 		return {
 			["accessibility"] = "rbxassetid://10709751939",
 			["activity"] = "rbxassetid://10709752035",
